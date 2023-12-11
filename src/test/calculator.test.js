@@ -1,38 +1,73 @@
 const Calculator = require('../calculator.js');
 
-const calculator = new Calculator();
+/**
+ * new Calculator()를 계속 새로 생성하는 이유
+ * 각각의 테스트는 독립적이어야 한다.
+ * 서로에게 영향을 주지 않도록!
+ */
 
-test('calculator set value', () => {
-  calculator.set(10);
-  expect(calculator.value).toBe(10);
+describe('Calculator', () => {
+  let cal;
+  beforeEach(() => {
+    cal = new Calculator();
+  });
+  it('inits with 0', () => {
+    expect(cal.value).toBe(0);
+  });
 
-  calculator.clear();
-  expect(calculator.value).toBe(0);
-});
+  it('sets', () => {
+    cal.set(5);
+    expect(cal.value).toBe(5);
+  });
 
-test('calculator function', () => {
-  calculator.set(90);
-  calculator.add(5);
-  expect(calculator.value).toBe(95);
+  it('clear', () => {
+    cal.clear();
+    expect(cal.value).toBe(0);
+  });
 
-  // const addOver100 = calculator.add(10);
-  // expect(addOver100).toThrow('Value can not be greater than 100');
-});
+  it('add', () => {
+    cal.set(20);
+    cal.add(5);
+    expect(cal.value).toBe(25);
+  });
 
-test('calculator substract', () => {
-  calculator.set(50);
-  calculator.subtract(20);
-  expect(calculator.value).toBe(50 - 20);
-});
+  it('add should throw an error if value is greater than 100', () => {
+    cal.set(90);
 
-test('calculator multiply', () => {
-  calculator.set(5);
-  calculator.multiply(10);
-  expect(calculator.value).toBe(5 * 10);
-});
+    expect(() => {
+      cal.add(20);
+    }).toThrow(new Error('Value can not be greater than 100'));
+  });
 
-test('calculator divide', () => {
-  calculator.set(20);
-  calculator.divide(4);
-  expect(calculator.value).toBe(20 / 4);
+  it('subtract', () => {
+    cal.set(20);
+    cal.subtract(5);
+    expect(cal.value).toBe(15);
+  });
+
+  it('multiply', () => {
+    cal.set(5);
+    cal.multiply(10);
+    expect(cal.value).toBe(5 * 10);
+  });
+
+  describe('divides', () => {
+    it('0 / 0 === NaN', () => {
+      cal.divide(0);
+      expect(cal.value).toBeNaN();
+    });
+
+    it('1 / 0 === Infinity', () => {
+      cal.set(1);
+      cal.divide(0);
+      expect(cal.value).toBe(Infinity);
+    });
+
+    it('4 / 4 === 1', () => {
+      cal.set(4);
+      cal.divide(4);
+
+      expect(cal.value).toBe(1);
+    });
+  });
 });
