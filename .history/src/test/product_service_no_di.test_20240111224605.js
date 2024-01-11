@@ -32,9 +32,4 @@ describe('ProductService', () => {
     ]);
     expect(items.length).toBe(1);
   });
-
-  it('test', async () => {
-    const items = await prodcutService.fetchAvailableItems();
-    expect(fetchItems).toHaveBeenCalledTimes(1);
-  });
 });

@@ -21,20 +21,4 @@ describe('ProductService', () => {
   beforeEach(() => {
     prodcutService = new ProductService();
   });
-
-  it('should filter out only available items', async () => {
-    const items = await prodcutService.fetchAvailableItems();
-    expect(items).toEqual([
-      {
-        item: 'Milk',
-        available: true,
-      },
-    ]);
-    expect(items.length).toBe(1);
-  });
-
-  it('test', async () => {
-    const items = await prodcutService.fetchAvailableItems();
-    expect(fetchItems).toHaveBeenCalledTimes(1);
-  });
 });
