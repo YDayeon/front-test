@@ -1,18 +1,28 @@
 class Stack {
   constructor() {
-    this.list = [];
+    this.array = [];
   }
 
-  set(items) {
-    this.list = [...items];
+  size() {
+    return this.array.length;
   }
 
   push(item) {
-    this.list = [...this.list, item];
+    this.array.push(item);
   }
 
   pop() {
-    this.list = this.list.slice(0, this.list.length - 1);
+    if (this.array.length === 0) {
+      throw new Error('Stack is empty!');
+    }
+    return this.array.pop();
+  }
+
+  peek() {
+    if (this.array.length === 0) {
+      throw new Error('Stack is empty!');
+    }
+    return this.array[this.size() - 1];
   }
 }
 
